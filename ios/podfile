@@ -1,0 +1,17 @@
+platform :ios, '12.0'  # Ajusta la versión si es necesario
+use_frameworks!
+use_modular_headers!
+
+target 'Runner' do
+  use_frameworks!
+  use_modular_headers!
+
+  pod 'Firebase/Core'
+  pod 'Firebase/Auth'
+  pod 'Firebase/Firestore'
+  # Agrega otros pods según los paquetes que uses
+
+  target 'RunnerTests' do
+    inherit! :search_paths
+  end
+end
