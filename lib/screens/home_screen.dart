@@ -6,8 +6,14 @@ import 'package:todor5/screens/edit_task_screen.dart';
 import '../models/task_model.dart';
 import '../services/firestore_service.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   final FirestoreService _firestoreService = FirestoreService();
+  final Map<String, bool> _translateState = {};
 
   String formatDate(DateTime date) {
     return DateFormat("d 'de' MMMM", 'es_ES').format(date);
@@ -16,11 +22,22 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromARGB(
+          255, 207, 233, 235), // Color de fondo tomado de la imagen
       appBar: AppBar(
-        title: const Text('ToDo List'),
+        title: const Text(
+          'ToDo R5 (Fabián Valero)',
+          style: TextStyle(
+            fontFamily: 'EloquiaDisplay',
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        backgroundColor: Color.fromARGB(255, 207, 233, 235),
       ),
       body: StreamBuilder<List<Task>>(
-        stream: _firestoreService.getTasks(FirebaseAuth.instance.currentUser!.uid),
+        stream:
+            _firestoreService.getTasks(FirebaseAuth.instance.currentUser!.uid),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -29,7 +46,9 @@ class HomeScreen extends StatelessWidget {
             return Center(child: Text('Error: ${snapshot.error}'));
           }
           if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Center(child: Text('No hay tareas.'));
+            return const Center(
+                child: Text('No hay tareas.',
+                    style: TextStyle(color: Colors.white)));
           }
 
           List<Task> tasks = snapshot.data!;
@@ -53,55 +72,99 @@ class HomeScreen extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
                       entry.key,
-                      style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        fontFamily: 'EloquiaDisplay',
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
-                  ...entry.value.map((task) => ListTile(
-                        title: Text(task.title),
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(task.description),
-                            const SizedBox(height: 5),
-                            Text(
-                              "🇺🇸 ${task.translatedTitle}",
-                              style: const TextStyle(fontStyle: FontStyle.italic, color: Colors.blue),
+                  ...entry.value.map((task) {
+                    _translateState.putIfAbsent(task.id, () => false);
+                    return Container(
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 8.0, vertical: 4.0),
+                      padding: const EdgeInsets.all(12.0),
+                      decoration: BoxDecoration(
+                        color: Color(0xFF1E1E1E),
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            _translateState[task.id]!
+                                ? task.translatedTitle
+                                : task.title,
+                            style: TextStyle(
+                              fontFamily: 'EloquiaDisplay',
+                              fontSize: 18,
+                              color: Colors.white70,
+                              fontWeight: FontWeight.w600,
                             ),
-                            Text(
-                              "🇺🇸 ${task.translatedDescription}",
-                              style: const TextStyle(fontStyle: FontStyle.italic, color: Colors.blue),
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            _translateState[task.id]!
+                                ? task.translatedDescription
+                                : task.description,
+                            style: TextStyle(
+                              fontFamily: 'EloquiaDisplay',
+                              fontSize: 16,
+                              color: Colors.white70,
+                              fontWeight: FontWeight.w400,
                             ),
-                          ],
-                        ),
-                        trailing: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Checkbox(
-                              value: task.isCompleted,
-                              onChanged: (value) {
-                                // Lógica para marcar como completada
-                              },
+                          ),
+                          const SizedBox(height: 8),
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                _translateState[task.id] =
+                                    !_translateState[task.id]!;
+                              });
+                            },
+                            child: Text(
+                              'Translate',
+                              style: TextStyle(
+                                color: Colors.blue,
+                                decoration: TextDecoration.underline,
+                              ),
                             ),
-                            IconButton(
-                              icon: Icon(Icons.edit),
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => EditTaskScreen(task: task),
-                                  ),
-                                );
-                              },
-                            ),
-                            IconButton(
-                              icon: Icon(Icons.delete),
-                              onPressed: () {
-                                _firestoreService.deleteTask(task.id);
-                              },
-                            ),
-                          ],
-                        ),
-                      ))
+                          ),
+                          const SizedBox(height: 8),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Checkbox(
+                                value: task.isCompleted,
+                                onChanged: (value) {},
+                                activeColor: Colors.blue,
+                              ),
+                              IconButton(
+                                icon: Icon(Icons.edit, color: Colors.white70),
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          EditTaskScreen(task: task),
+                                    ),
+                                  );
+                                },
+                              ),
+                              IconButton(
+                                icon:
+                                    Icon(Icons.delete, color: Colors.redAccent),
+                                onPressed: () {
+                                  _firestoreService.deleteTask(task.id);
+                                },
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    );
+                  }).toList(),
                 ],
               );
             }).toList(),
@@ -115,7 +178,8 @@ class HomeScreen extends StatelessWidget {
             MaterialPageRoute(builder: (context) => AddTaskScreen()),
           );
         },
-        child: const Icon(Icons.add),
+        backgroundColor: Colors.blue,
+        child: const Icon(Icons.add, color: Colors.white),
       ),
     );
   }

@@ -2,6 +2,7 @@
     <application
         android:label="todor5"
         android:name="${applicationName}"
+        android:screenOrientation="portrait"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

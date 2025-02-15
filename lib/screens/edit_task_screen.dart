@@ -50,8 +50,8 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
         description: _descriptionController.text,
         isCompleted: widget.task.isCompleted,
         date: _selectedDate!,
-        translatedTitle: '',
-        translatedDescription: '',
+        translatedTitle: widget.task.translatedTitle, // Estos campos serán actualizados por la Cloud Function
+        translatedDescription: widget.task.translatedDescription, // Estos campos serán actualizados por la Cloud Function
         userId: widget.task.userId,
       );
 

@@ -1,4 +1,4 @@
-const { onDocumentCreated } = require("firebase-functions/v2/firestore");
+const { onDocumentWritten } = require("firebase-functions/v2/firestore");
 const { setGlobalOptions } = require("firebase-functions/v2");
 const admin = require("firebase-admin");
 const { TranslationServiceClient } = require("@google-cloud/translate");
@@ -12,17 +12,28 @@ setGlobalOptions({ maxInstances: 10 });
 // Inicializa el cliente de traducción de Google
 const translationClient = new TranslationServiceClient();
 
-exports.translateTask = onDocumentCreated("tasks/{taskId}", async (event) => {
-    const snapshot = event.data;
-    if (!snapshot) {
-        console.error("Error: No se recibió el snapshot.");
+exports.translateTask = onDocumentWritten("tasks/{taskId}", async (event) => {
+    const beforeData = event.data.before.data();
+    const afterData = event.data.after.data();
+
+    // Verificar si el documento fue eliminado
+    if (!afterData) {
+        console.log("El documento fue eliminado.");
         return;
     }
 
-    const data = snapshot.data();
+    // Verificar si el título o la descripción han cambiado
+    const titleChanged = beforeData?.title !== afterData.title;
+    const descriptionChanged = beforeData?.description !== afterData.description;
+
+    // Si no hay cambios en el título o la descripción, no hacer nada
+    if (!titleChanged && !descriptionChanged) {
+        console.log("No hay cambios en el título o la descripción.");
+        return;
+    }
 
     // Verificar que title y description existen y no están vacíos
-    if (!data?.title?.trim() || !data?.description?.trim()) {
+    if (!afterData.title?.trim() || !afterData.description?.trim()) {
         console.log("No hay título o descripción para traducir.");
         return;
     }
@@ -31,14 +42,14 @@ exports.translateTask = onDocumentCreated("tasks/{taskId}", async (event) => {
         // Traducción a inglés
         const [translatedTitleResponse] = await translationClient.translateText({
             parent: `projects/todor5project/locations/global`, // Usa el ID de tu proyecto
-            contents: [data.title],
+            contents: [afterData.title],
             mimeType: "text/plain",
             targetLanguageCode: "en",
         });
 
         const [translatedDescriptionResponse] = await translationClient.translateText({
             parent: `projects/todor5project/locations/global`, // Usa el ID de tu proyecto
-            contents: [data.description],
+            contents: [afterData.description],
             mimeType: "text/plain",
             targetLanguageCode: "en",
         });
@@ -47,7 +58,7 @@ exports.translateTask = onDocumentCreated("tasks/{taskId}", async (event) => {
         const translatedDescription = translatedDescriptionResponse.translations[0].translatedText;
 
         // Guardar la traducción en Firestore
-        await snapshot.ref.update({
+        await event.data.after.ref.update({
             translatedTitle,
             translatedDescription,
         });
