@@ -50,8 +50,8 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
         description: _descriptionController.text,
         isCompleted: widget.task.isCompleted,
         date: _selectedDate!,
-        translatedTitle: widget.task.translatedTitle, // Estos campos serán actualizados por la Cloud Function
-        translatedDescription: widget.task.translatedDescription, // Estos campos serán actualizados por la Cloud Function
+        translatedTitle: widget.task.translatedTitle,
+        translatedDescription: widget.task.translatedDescription,
         userId: widget.task.userId,
       );
 
@@ -112,13 +112,13 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                   ElevatedButton(
                     onPressed: _pickDate,
                     style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF0CECD2), // Color de fondo
-                  foregroundColor: Color(0xFF003637), // Color del texto
+                  backgroundColor: Color(0xFF0CECD2),
+                  foregroundColor: Color(0xFF003637),
                   padding: EdgeInsets.symmetric(
-                      horizontal: 24, vertical: 12), // Espaciado
+                      horizontal: 24, vertical: 12),
                   textStyle: TextStyle(
                       fontSize: 14,
-                      fontWeight: FontWeight.bold), // Estilo del texto
+                      fontWeight: FontWeight.bold),
                 ),
                     child: Text('Elegir Fecha'),
                   ),
@@ -129,13 +129,13 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                 child: ElevatedButton(
                   onPressed: _saveTask,
                   style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF0CECD2), // Color de fondo
-                  foregroundColor: Color(0xFF003637), // Color del texto
+                  backgroundColor: Color(0xFF0CECD2),
+                  foregroundColor: Color(0xFF003637),
                   padding: EdgeInsets.symmetric(
-                      horizontal: 24, vertical: 12), // Espaciado
+                      horizontal: 24, vertical: 12), 
                   textStyle: TextStyle(
                       fontSize: 14,
-                      fontWeight: FontWeight.bold), // Estilo del texto
+                      fontWeight: FontWeight.bold), 
                 ),
                   child: Text('Guardar Cambios'),
                 ),

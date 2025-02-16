@@ -5,7 +5,7 @@ module.exports = {
   },
   extends: "eslint:recommended",
   rules: {
-    "no-console": "off", // Permite el uso de console.log
+    "no-console": "off",
   },
   parserOptions: {
     ecmaVersion: 2018,

@@ -16,10 +16,10 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   void initState() {
     super.initState();
 
-    // Configuración de animaciones
+    // Inicializar animaciones
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 2), // Duración de la animación
+      duration: const Duration(seconds: 2),
     );
 
     _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
@@ -27,12 +27,12 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
     );
 
     _scaleAnimation = Tween<double>(begin: 0.5, end: 1.2).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.elasticOut), // Efecto rebote
+      CurvedAnimation(parent: _controller, curve: Curves.elasticOut),
     );
 
-    _controller.forward(); // Iniciar animación
+    _controller.forward(); 
 
-    // Verificar autenticación después de la animación
+    // Verifica autenticación después de la animación
     Future.delayed(const Duration(seconds: 3), _checkLoginStatus);
   }
 
@@ -56,7 +56,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF76b5c5), // Color de fondo
+      backgroundColor: const Color(0xFF76b5c5),
       body: Center(
         child: AnimatedBuilder(
           animation: _controller,
@@ -70,7 +70,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
             );
           },
           child: Image.asset(
-            'assets/images/r5-logo-light.png', // Ruta correcta de la imagen
+            'assets/images/r5-logo-light.png',
             width: 150,
           ),
         ),

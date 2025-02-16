@@ -31,8 +31,8 @@ class _HomeScreenState extends State<HomeScreen> {
   await FirebaseAuth.instance.signOut();
   Navigator.pushAndRemoveUntil(
     context,
-    MaterialPageRoute(builder: (context) => LoginScreen()), // Asegúrate de importar LoginScreen
-    (Route<dynamic> route) => false, // Elimina todas las pantallas anteriores
+    MaterialPageRoute(builder: (context) => LoginScreen()), 
+    (Route<dynamic> route) => false, 
   );
 }
 
@@ -59,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
             onPressed: _signOut,
           ),
           IconButton(
-            icon: const Icon(Icons.add, size: 32), // Ícono más grande
+            icon: const Icon(Icons.add, size: 32),
             onPressed: () {
               Navigator.push(
                 context,

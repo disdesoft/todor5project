@@ -5,14 +5,14 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:todor5/screens/home_screen.dart';
 import 'package:todor5/screens/login_screen.dart';
 import 'package:todor5/screens/register_screen.dart';
-import 'package:todor5/screens/splash_screen.dart'; // Importamos la Splash Screen
+import 'package:todor5/screens/splash_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await initializeDateFormatting('es_ES', null);
   SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp, // Bloquear la orientación vertical
+    DeviceOrientation.portraitUp,
   ]);
   runApp(const MyApp());
 }
@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: SplashScreen(), // ✅ Ahora inicia con SplashScreen
+      home: SplashScreen(), // 
       routes: {
         '/login': (context) => LoginScreen(),
         '/register': (context) => RegisterScreen(),

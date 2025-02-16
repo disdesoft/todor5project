@@ -106,13 +106,13 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                   ElevatedButton(
                     onPressed: _pickDate,
                     style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF0CECD2), // Color de fondo
-                  foregroundColor: Color(0xFF003637), // Color del texto
+                  backgroundColor: Color(0xFF0CECD2), 
+                  foregroundColor: Color(0xFF003637), 
                   padding: EdgeInsets.symmetric(
-                      horizontal: 24, vertical: 12), // Espaciado
+                      horizontal: 24, vertical: 12), 
                   textStyle: TextStyle(
                       fontSize: 14,
-                      fontWeight: FontWeight.bold), // Estilo del texto
+                      fontWeight: FontWeight.bold),
                 ),
                     child: Text('Elegir Fecha'),
                   ),
@@ -123,13 +123,13 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                 child: ElevatedButton(
                   onPressed: _saveTask,
                   style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF0CECD2), // Color de fondo
-                  foregroundColor: Color(0xFF003637), // Color del texto
+                  backgroundColor: Color(0xFF0CECD2), 
+                  foregroundColor: Color(0xFF003637), 
                   padding: EdgeInsets.symmetric(
-                      horizontal: 24, vertical: 12), // Espaciado
+                      horizontal: 24, vertical: 12),
                   textStyle: TextStyle(
                       fontSize: 14,
-                      fontWeight: FontWeight.bold), // Estilo del texto
+                      fontWeight: FontWeight.bold), 
                 ),
                   child: Text('Guardar Tarea'),
                 ),
