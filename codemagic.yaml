@@ -2,7 +2,7 @@ workflows:
   ios-build:
     name: iOS Build
     max_build_duration: 120
-    instance_type: mac_mini_m1
+    instance_type: mac_mini_m2
     environment:
       vars:
         XCODE_WORKSPACE: "Runner.xcworkspace"
