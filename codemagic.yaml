@@ -10,6 +10,12 @@ workflows:
         APP_STORE_CONNECT_KEY: ENCODED_APP_STORE_KEY
       flutter: stable
       xcode: latest
+      cocoapods: default
+      ios_signing:  # Configuración de firma
+        distribution_type: app_store  # O ad_hoc para pruebas internas
+        bundle_identifier: com.fabianvalero.todor5  # Reemplaza con tu Bundle ID
+        team_id: YOUR_TEAM_ID  # Reemplaza con tu Team ID de Apple
+        provisioning_profile_specifier: "Your_Provisioning_Profile"  # Opcional
     scripts:
       - name: Clean Flutter
         script: |
@@ -17,10 +23,16 @@ workflows:
           flutter pub get
       - name: Clean iOS Pods
         script: |
-          rm -rf ios/Pods ios/.symlinks ios/Flutter/Flutter.podspec
           cd ios
+          rm -rf Pods .symlinks Flutter/Flutter.podspec
           pod install --repo-update
           cd ..
       - name: Build iOS App
         script: |
-          flutter build ios --debug --no-codesign
+          flutter build ios --release --no-codesign
+    artifacts:
+      - build/ios/ipa/*.ipa
+    publishing:
+      email:
+        recipients:
+          - your-email@example.com
