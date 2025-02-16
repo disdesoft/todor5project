@@ -3,13 +3,11 @@ use_frameworks!
 use_modular_headers!
 
 target 'Runner' do
-  use_frameworks!
-  use_modular_headers!
-
+  
   pod 'Firebase/Core'
   pod 'Firebase/Auth'
   pod 'Firebase/Firestore'
-  
+  pod 'Firebase/Functions' 
 
   target 'RunnerTests' do
     inherit! :search_paths
