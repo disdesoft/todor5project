@@ -61,7 +61,9 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFe6faf9),
       appBar: AppBar(
+        backgroundColor: const Color(0xFFe6faf9),
         title: Text('Agregar Tarea'),
       ),
       body: Padding(
@@ -103,6 +105,15 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                   SizedBox(width: 10),
                   ElevatedButton(
                     onPressed: _pickDate,
+                    style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xFF0CECD2), // Color de fondo
+                  foregroundColor: Color(0xFF003637), // Color del texto
+                  padding: EdgeInsets.symmetric(
+                      horizontal: 24, vertical: 12), // Espaciado
+                  textStyle: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold), // Estilo del texto
+                ),
                     child: Text('Elegir Fecha'),
                   ),
                 ],
@@ -111,6 +122,15 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
               Center(
                 child: ElevatedButton(
                   onPressed: _saveTask,
+                  style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xFF0CECD2), // Color de fondo
+                  foregroundColor: Color(0xFF003637), // Color del texto
+                  padding: EdgeInsets.symmetric(
+                      horizontal: 24, vertical: 12), // Espaciado
+                  textStyle: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold), // Estilo del texto
+                ),
                   child: Text('Guardar Tarea'),
                 ),
               ),

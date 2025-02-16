@@ -38,7 +38,15 @@ dependencies:
   cloud_functions: ^5.3.2
   uuid: ^3.0.7
   intl: ^0.18.1
-  google_translator: ^1.0.0
+  google_fonts: ^6.2.1
+  flutter_launcher_icons: ^0.14.3
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/r5-logo-light1.png"
+  adaptive_icon_background: "#0CECD2" # Opcional para Android
+  adaptive_icon_foreground: "assets/images/r5-logo-light1.png" # Opcional para Android
 
 dev_dependencies:
   flutter_test:
@@ -62,9 +70,10 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
+  
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
+  assets:
+    - assets/images/r5-logo-light.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

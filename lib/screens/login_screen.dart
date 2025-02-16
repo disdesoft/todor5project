@@ -17,7 +17,8 @@ class _LoginScreenState extends State<LoginScreen> {
     if (_formKey.currentState!.validate()) {
       String email = _emailController.text;
       String password = _passwordController.text;
-      User? user = await _authService.signInWithEmailAndPassword(email, password);
+      User? user =
+          await _authService.signInWithEmailAndPassword(email, password);
       if (user != null) {
         Navigator.pushReplacementNamed(context, '/home');
       } else {
@@ -31,8 +32,16 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFe6faf9),
       appBar: AppBar(
-        title: Text('Iniciar Sesión'),
+        title: Center(
+            child: Text(
+          'Iniciar Sesión',
+          style: TextStyle(
+            color: Color(0xFF262c3a),
+          ),
+        )),
+        backgroundColor: const Color(0xFFe6faf9),
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
@@ -64,6 +73,15 @@ class _LoginScreenState extends State<LoginScreen> {
               SizedBox(height: 20),
               ElevatedButton(
                 onPressed: _login,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xFF0CECD2), // Color de fondo
+                  foregroundColor: Color(0xFF003637), // Color del texto
+                  padding: EdgeInsets.symmetric(
+                      horizontal: 24, vertical: 12), // Espaciado
+                  textStyle: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold), // Estilo del texto
+                ),
                 child: Text('Iniciar Sesión'),
               ),
               TextButton(

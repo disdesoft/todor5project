@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="todor5"
+        android:label="ToDoR5"
         android:name="${applicationName}"
         android:screenOrientation="portrait"
         android:icon="@mipmap/ic_launcher">

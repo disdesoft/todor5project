@@ -27,6 +27,17 @@ class FirestoreService {
     await _firestore.collection('tasks').doc(task.id).update(task.toMap());
   }
 
+  // Actualizar solo el estado de completado de una tarea
+  Future<void> updateTaskCompletion(String taskId, bool isCompleted) async {
+    try {
+      await _firestore.collection('tasks').doc(taskId).update({
+        'isCompleted': isCompleted,
+      });
+    } catch (e) {
+      print("Error al actualizar el estado de la tarea: $e");
+    }
+  }
+
   // Eliminar una tarea
   Future<void> deleteTask(String taskId) async {
     await _firestore.collection('tasks').doc(taskId).delete();
