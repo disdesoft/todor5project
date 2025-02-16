@@ -19,12 +19,9 @@ workflows:
         script: |
           flutter clean
           flutter pub get
-      - name: Clean iOS Pods
+      - name: Build iOS Simulator
         script: |
-          cd ios
-          rm -rf Pods .symlinks Flutter/Flutter.podspec
-          pod install --repo-update
-          cd ..
+        flutter build ios --simulator --no-codesign
       - name: Build iOS App
         script: |
           flutter build ios --debug --no-codesign
