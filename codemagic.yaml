@@ -1,21 +1,19 @@
 workflows:
   ios-build:
-    name: iOS Build
+    name: iOS Build (Development)
     max_build_duration: 120
     instance_type: mac_mini_m2
     environment:
       vars:
         XCODE_WORKSPACE: "Runner.xcworkspace"
         XCODE_SCHEME: "Runner"
-        APP_STORE_CONNECT_KEY: ENCODED_APP_STORE_KEY
       flutter: stable
       xcode: latest
       cocoapods: default
-      ios_signing:  # Configuración de firma
-        distribution_type: app_store  # O ad_hoc para pruebas internas
-        bundle_identifier: com.fabianvalero.todor5  # Reemplaza con tu Bundle ID
-        team_id: YOUR_TEAM_ID  # Reemplaza con tu Team ID de Apple
-        provisioning_profile_specifier: "Your_Provisioning_Profile"  # Opcional
+      ios_signing:  #
+        distribution_type: development  
+        bundle_identifier: com.fabianvalero.todor5  
+        team_id: AUTO  
     scripts:
       - name: Clean Flutter
         script: |
@@ -29,10 +27,10 @@ workflows:
           cd ..
       - name: Build iOS App
         script: |
-          flutter build ios --release --no-codesign
+          flutter build ios --debug --no-codesign
     artifacts:
-      - build/ios/ipa/*.ipa
+      - build/ios/ipa/*.ipa  
     publishing:
       email:
         recipients:
-          - your-email@example.com
+          - djfabianvalero@gmail.com
