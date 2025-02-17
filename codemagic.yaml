@@ -11,6 +11,7 @@ workflows:
       flutter: stable
       xcode: latest
       cocoapods: default
+      deployment_target: 13.0
       ios_signing:
         distribution_type: development
         bundle_identifier: com.fabianvalero.todor5
