@@ -2,7 +2,12 @@ workflows:
   ios-build:
     name: iOS Build
     environment:
-      vars:
-        XCODE_VERSION: latest
       flutter: stable
-      cocoapods: 13.0.0  
+    scripts:
+      - name: Establecer iOS Deployment Target en 13.0
+        script: |
+          sed -i '' 's/platform :ios, .*/platform :ios, "13.0"/' ios/Podfile
+      - name: Instalar dependencias
+        script: |
+          cd ios
+          pod install
