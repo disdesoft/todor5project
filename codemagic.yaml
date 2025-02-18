@@ -6,7 +6,6 @@ workflows:
       flutter: stable
       xcode: 16.1  
       node: latest  
-      ruby: latest  
 
     scripts:
       - name: Set up Flutter environment
