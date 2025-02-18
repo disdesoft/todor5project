@@ -4,10 +4,10 @@ workflows:
     max_build_duration: 60
     environment:
       flutter: stable
-      xcode: 14.2  # Asegúrate de que esta versión sea compatible con tu proyecto
-      node: latest  # Si usas dependencias de Node.js
-      ruby: latest  # CocoaPods usa Ruby, por lo que esto puede ser útil
-      
+      xcode: default  
+      node: latest  
+      ruby: latest  
+
     scripts:
       - name: Set up Flutter environment
         script: |
