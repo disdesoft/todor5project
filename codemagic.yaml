@@ -19,15 +19,19 @@ workflows:
           # Instalar dependencias de Flutter
           flutter pub get
           
-          # Instalar CocoaPods
+          # Instalar CocoaPods (asegurándonos de que la versión sea la correcta)
           gem install cocoapods
-          pod install --project-directory=ios
+          pod repo update
+
+          # Hacer una instalación de CocoaPods con el directorio adecuado
+          cd ios
+          pod install --repo-update --no-integrate --verbose
 
       - name: Build iOS release
         script: |
-          # Compilar para iOS
-          flutter build ios --release --no-codesign
-          
+          # Compilar para iOS sin códigosignature (sin certificado de Apple)
+          flutter build ios --release --no-codesign --verbose
+
       - name: Upload build artifact
         script: |
           # Subir el archivo generado a algún lugar, si es necesario
