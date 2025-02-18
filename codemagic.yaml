@@ -4,12 +4,12 @@ workflows:
     max_build_duration: 60
     environment:
       flutter: stable
-      cocoapods: true
       xcode: 14.2  # Asegúrate de que esta versión sea compatible con tu proyecto
       node: latest  # Si usas dependencias de Node.js
       ruby: latest  # CocoaPods usa Ruby, por lo que esto puede ser útil
-      branches:
-        
+    branches:
+      only:
+        - main  # Puedes personalizar esto si usas una rama diferente
     scripts:
       - name: Set up Flutter environment
         script: |
@@ -31,4 +31,8 @@ workflows:
           # Compilar para iOS
           flutter build ios --release --no-codesign
           
-    
+      - name: Upload build artifact
+        script: |
+          # Subir el archivo generado a algún lugar, si es necesario
+          mkdir -p $CM_BUILD_DIR/artifacts
+          cp -r build/ios/iphoneos/*.ipa $CM_BUILD_DIR/artifacts/
