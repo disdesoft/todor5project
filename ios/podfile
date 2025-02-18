@@ -24,7 +24,7 @@ target 'Runner' do
 
   # Use this line to ensure Flutter's own dependencies are added
   flutter_application_path = '../..'
-  load File.join(flutter_application_path, '.flutter-plugins-dependencies')
+
 
   # Uncomment this line to enable Flutter's tool to manage CocoaPods installation
   # pod 'FlutterPluginRegistrant', :path => File.join(flutter_application_path, 'ios', 'Flutter')
