@@ -7,8 +7,7 @@ workflows:
       xcode: 14.2  # Asegúrate de que esta versión sea compatible con tu proyecto
       node: latest  # Si usas dependencias de Node.js
       ruby: latest  # CocoaPods usa Ruby, por lo que esto puede ser útil
-    branches:
-
+      
     scripts:
       - name: Set up Flutter environment
         script: |
