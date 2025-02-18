@@ -1,31 +1,35 @@
 workflows:
-  ios-app:
-    name: iOS Build Workflow
+  ios:
+    name: Build iOS
+    max_build_duration: 60
     environment:
       flutter: stable
-      xcode: latest
+      cocoapods: true
+      xcode: 14.2  # Asegúrate de que esta versión sea compatible con tu proyecto
+      node: latest  # Si usas dependencias de Node.js
+      ruby: latest  # CocoaPods usa Ruby, por lo que esto puede ser útil
+      branches:
+        only:
+          - main  # Puedes personalizar esto si usas una rama diferente
     scripts:
-      - name: Configurar iOS Deployment Target a 13.0
+      - name: Set up Flutter environment
         script: |
-          sed -i '' 's/platform :ios, .*/platform :ios, "13.0"/' ios/Podfile
+          flutter channel stable
+          flutter upgrade
+          flutter doctor
 
-      - name: Instalar dependencias de CocoaPods
+      - name: Install dependencies
         script: |
-          cd ios
-          pod repo update
-          pod install --verbose
-
-      - name: Compilar la aplicación Flutter para iOS
-        script: |
-          flutter clean
+          # Instalar dependencias de Flutter
           flutter pub get
-          flutter build ios --no-codesign
+          
+          # Instalar CocoaPods
+          gem install cocoapods
+          pod install --project-directory=ios
 
-    artifacts:
-      - build/ios/iphoneos/*.ipa
-      - build/ios/iphoneos/*.app
-
-    publishing:
-      email:
-        recipients:
-          - "disdesoft@gmail.com"
+      - name: Build iOS release
+        script: |
+          # Compilar para iOS
+          flutter build ios --release --no-codesign
+          
+    
