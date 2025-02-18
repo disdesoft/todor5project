@@ -1,0 +1,44 @@
+# Uncomment this line to define a global platform for your project
+platform :ios, '13.0'
+
+# CocoaPods master repo update (uncomment if needed)
+# source 'https://github.com/CocoaPods/Specs.git'
+
+# Target platform (Flutter automatically uses this)
+target 'Runner' do
+  # Flutter's default settings
+  use_frameworks!
+  use_modular_headers!
+
+  # This is required for Flutter iOS integration
+  pod 'Flutter', :path => File.expand_path('..', __dir__)
+
+  # These Pods are necessary for Flutter plugins
+  pod 'Firebase/Core', '~> 9.0'
+  pod 'Firebase/Analytics', '~> 9.0'
+  pod 'Firebase/Crashlytics', '~> 9.0'
+  pod 'Firebase/Messaging', '~> 9.0'
+
+  # Additional dependencies (if any)
+  # pod 'your-pod-name'
+
+  # Use this line to ensure Flutter's own dependencies are added
+  flutter_application_path = '../..'
+  load File.join(flutter_application_path, '.flutter-plugins-dependencies')
+
+  # Uncomment this line to enable Flutter's tool to manage CocoaPods installation
+  # pod 'FlutterPluginRegistrant', :path => File.join(flutter_application_path, 'ios', 'Flutter')
+
+end
+
+# Post-install script for some dependencies
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    # Avoid warning messages for iOS 13.0+ compatibility
+    if target.name == 'Flutter'
+      target.build_configurations.each do |config|
+        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
+      end
+    end
+  end
+end
