@@ -8,8 +8,7 @@ workflows:
       node: latest  # Si usas dependencias de Node.js
       ruby: latest  # CocoaPods usa Ruby, por lo que esto puede ser útil
     branches:
-      only:
-        - main  # Puedes personalizar esto si usas una rama diferente
+
     scripts:
       - name: Set up Flutter environment
         script: |
