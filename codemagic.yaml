@@ -19,17 +19,31 @@ workflows:
           # Instalar dependencias de Flutter
           flutter pub get
           
-          # Instalar CocoaPods (asegurándonos de que la versión sea la correcta)
+          # Verificar si el directorio 'ios' existe y contiene el archivo Podfile
+          if [ -d "ios" ]; then
+            echo "Directorio ios encontrado"
+          else
+            echo "Error: El directorio ios no existe"
+            exit 1
+          fi
+
+          # Verificar si el archivo Podfile está presente
+          if [ ! -f "ios/Podfile" ]; then
+            echo "Error: El archivo Podfile no se encuentra en ios/"
+            exit 1
+          fi
+
+          # Instalar CocoaPods
           gem install cocoapods
           pod repo update
 
-          # Hacer una instalación de CocoaPods con el directorio adecuado
+          # Hacer una instalación limpia de CocoaPods
           cd ios
-          pod install --repo-update --no-integrate --verbose
+          pod install --clean-install --repo-update --verbose
 
       - name: Build iOS release
         script: |
-          # Compilar para iOS sin códigosignature (sin certificado de Apple)
+          # Compilar para iOS sin códigosignature
           flutter build ios --release --no-codesign --verbose
 
       - name: Upload build artifact
