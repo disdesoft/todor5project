@@ -1,20 +1,31 @@
 workflows:
-  ios-build:
-    name: iOS Build
+  ios-app:
+    name: iOS Build Workflow
     environment:
       flutter: stable
+      xcode: latest
     scripts:
-      - name: Limpiar y crear el proyecto iOS
-        script: |
-          rm -rf ios
-          flutter create .
-      - name: Configurar el deployment target a iOS 13
+      - name: Configurar iOS Deployment Target a 13.0
         script: |
           sed -i '' 's/platform :ios, .*/platform :ios, "13.0"/' ios/Podfile
-      - name: Ejecutar flutter pub get
-        script: |
-          flutter pub get
+
       - name: Instalar dependencias de CocoaPods
         script: |
           cd ios
-          pod install --repo-update
+          pod repo update
+          pod install --verbose
+
+      - name: Compilar la aplicación Flutter para iOS
+        script: |
+          flutter clean
+          flutter pub get
+          flutter build ios --no-codesign
+
+    artifacts:
+      - build/ios/iphoneos/*.ipa
+      - build/ios/iphoneos/*.app
+
+    publishing:
+      email:
+        recipients:
+          - "disdesoft@gmail.com"
