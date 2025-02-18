@@ -1,34 +1,8 @@
 workflows:
   ios-build:
     name: iOS Build
-    max_build_duration: 120
-    instance_type: mac_mini_m2
     environment:
       vars:
-        XCODE_WORKSPACE: "Runner.xcworkspace"
-        XCODE_SCHEME: "Runner"
-        APP_STORE_CONNECT_KEY: ENCODED_APP_STORE_KEY
+        XCODE_VERSION: latest
       flutter: stable
-      xcode: latest
-      cocoapods: default
-      deployment_target: 13.0
-      ios_signing:
-        distribution_type: development
-        bundle_identifier: com.fabianvalero.todor5
-    scripts:
-      - name: Clean Flutter
-        script: |
-          flutter clean
-          flutter pub get
-      - name: Build iOS Simulator
-        script: |
-          flutter build ios --simulator --no-codesign
-      - name: Build iOS App
-        script: |
-          flutter build ios --debug --no-codesign
-    artifacts:
-      - build/ios/ipa/*.ipa
-    publishing:
-      email:
-        recipients:
-          - your-email@example.com
+      cocoapods: 13.0.0  

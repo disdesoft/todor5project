@@ -42,7 +42,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
     if (mounted) {
       Navigator.pushReplacementNamed(
         context,
-        user != null ? '/home' : '/login', // Redirige a home o login
+        user != null ? '/home' : '/login', // Redirige a home o a login
       );
     }
   }
