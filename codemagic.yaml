@@ -4,16 +4,12 @@ workflows:
     environment:
       flutter: stable
     scripts:
-      - name: Asegurar que la carpeta iOS existe
+      - name: Limpiar y crear el proyecto iOS
         script: |
-          if [ ! -d "ios" ]; then
-            flutter create .
-          fi
-      - name: Establecer iOS Deployment Target en 13.0
+          rm -rf ios
+          flutter create .
+      - name: Configurar el deployment target a iOS 13
         script: |
-          if [ ! -f "ios/Podfile" ]; then
-            echo "platform :ios, \"13.0\"" > ios/Podfile
-          fi
           sed -i '' 's/platform :ios, .*/platform :ios, "13.0"/' ios/Podfile
       - name: Ejecutar flutter pub get
         script: |
